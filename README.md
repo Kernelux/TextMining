@@ -25,10 +25,10 @@ Make propose les options suivantes:
 
 * Pour indiquer un chemin, il est déconseillé d'utiliser ~.
 * Une fois la recherche lancée, on peut:
-		* avoir une aide avec __--help--__
-		* relancer l'initialisation du programme avec __--reinit--__
-		* charger un index avec __--load_index--__
-		* quitter le programme avec __--exit--__
+	* avoir une aide avec __--help--__
+	* relancer l'initialisation du programme avec __--reinit--__
+	* charger un index avec __--load_index--__
+	* quitter le programme avec __--exit--__
 
 Il y a cependant certains problème après le help, la lecture sur l'entrée standard n'étant pas parfaite.
 Il est parfois nécessaire de faire une ou deux inputs (inutiles) en plus. A corriger. Pas eu le temps :) .
