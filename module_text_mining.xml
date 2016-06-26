@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_text_mining" default="compile.module.text_mining">
+  <dirname property="module.text_mining.basedir" file="${ant.file.module_text_mining}"/>
+  
+  <property name="module.jdk.home.text_mining" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.text_mining" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.text_mining" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.text_mining" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="text_mining.output.dir" value="${module.text_mining.basedir}/out/production/TEXT_MINING"/>
+  <property name="text_mining.testoutput.dir" value="${module.text_mining.basedir}/out/test/TEXT_MINING"/>
+  
+  <path id="text_mining.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="text_mining.module.production.classpath">
+    <path refid="${module.jdk.classpath.text_mining}"/>
+  </path>
+  
+  <path id="text_mining.runtime.production.module.classpath">
+    <pathelement location="${text_mining.output.dir}"/>
+  </path>
+  
+  <path id="text_mining.module.classpath">
+    <path refid="${module.jdk.classpath.text_mining}"/>
+    <pathelement location="${text_mining.output.dir}"/>
+  </path>
+  
+  <path id="text_mining.runtime.module.classpath">
+    <pathelement location="${text_mining.testoutput.dir}"/>
+    <pathelement location="${text_mining.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.text_mining">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.text_mining">
+    <patternset refid="excluded.from.module.text_mining"/>
+  </patternset>
+  
+  <path id="text_mining.module.sourcepath">
+    <dirset dir="${module.text_mining.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.text_mining" depends="compile.module.text_mining.production,compile.module.text_mining.tests" description="Compile module TEXT_MINING"/>
+  
+  <target name="compile.module.text_mining.production" depends="register.custom.compilers" description="Compile module TEXT_MINING; production classes">
+    <mkdir dir="${text_mining.output.dir}"/>
+    <javac2 destdir="${text_mining.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.text_mining}/javac">
+      <compilerarg line="${compiler.args.text_mining}"/>
+      <bootclasspath refid="text_mining.module.bootclasspath"/>
+      <classpath refid="text_mining.module.production.classpath"/>
+      <src refid="text_mining.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.text_mining"/>
+    </javac2>
+    
+    <copy todir="${text_mining.output.dir}">
+      <fileset dir="${module.text_mining.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.text_mining.tests" depends="register.custom.compilers,compile.module.text_mining.production" description="compile module TEXT_MINING; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.text_mining" description="cleanup module">
+    <delete dir="${text_mining.output.dir}"/>
+    <delete dir="${text_mining.testoutput.dir}"/>
+  </target>
+</project>
